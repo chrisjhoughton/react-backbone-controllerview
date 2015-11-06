@@ -9,7 +9,7 @@ This "controller view" aims to do four things:
 * Let you write less code
 * Allow for view control
 
-Contents:
+### Contents:
 
 * [Installation & quick-start](#installation--quick-start)
 * [Inspiration](#inspiration)
