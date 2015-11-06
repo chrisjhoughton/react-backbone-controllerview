@@ -202,7 +202,8 @@ Check out the [examples](./examples) folder. (Clone this repo and run locally)
 
 Got an idea for making this mixin better? Found a bug? 
 
-Submit an [issue](./issues). Pull requests are welcome.
+Submit an [issue](./issues). Pull requests are welcome. Please ensure that any changes
+pass unit tests. (Run `grunt`)
 
 
 ## License

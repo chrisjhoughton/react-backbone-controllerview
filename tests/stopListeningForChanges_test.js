@@ -5,7 +5,7 @@ var proxyquire              = require('proxyquire');
 var stopListeningForChanges = require('../lib/stopListeningForChanges');
 
 
-describe.only('stopListeningForChanges', function () {
+describe('stopListeningForChanges', function () {
 
   it('should stop listen for `change` and `sync` on models', function () {
 

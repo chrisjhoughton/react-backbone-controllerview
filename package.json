@@ -1,5 +1,5 @@
 {
-  "name": "@chrishoughton/react-backbone-controllerview",
+  "name": "@chrishoughton/rb-controllerview",
   "version": "1.0.0",
   "description": "A simple mixin to bind Backbone models and collections to React components.",
   "main": "./lib/ControllerView.js",
