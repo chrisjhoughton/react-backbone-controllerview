@@ -1,8 +1,6 @@
 # React-Backbone Controller View
 
-A simple mixin to bind Backbone models and collections to React components.
-
-This "controller view" aims to do four things:
+A simple mixin to bind Backbone models and collections to React components. Does four things:
 
 * Embrace uni-directional data flow
 * Provide a simple declarative approach
