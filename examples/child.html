@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <link rel="stylesheet" type="text/css" href="./css/base.css">
+
+  <!-- Script with the compiled controllerview as a global variable for simple testing -->
+  <script type="text/javascript" src="./js/app.built.js"></script>
+
+  <!-- Libs to make the examples work -->
+  <script type="text/javascript" src="./js/react.js"></script>
+  <script type="text/javascript" src="./js/react-dom.js"></script>
+  <script type="text/javascript" src="./js/browser.min.js"></script>
+  <script type="text/javascript" src="./js/lodash.js"></script>
+  <script type="text/javascript" src="./js/backbone.js"></script>
+
+
+</head>
+<body>
+
+  <div id="content"></div>
+
+
+  <script type="text/babel">
+
+    var User = Backbone.Model.extend({
+
+      defaults: function () {
+        return {
+          name: 'Chris',
+          height: 100
+        };
+      },
+
+      // Add 1cm in height every second
+      initialize: function () {
+        setInterval(function () {
+          var height = this.get('height');
+          var newHeight = height + 1;
+          this.set('height', newHeight);
+        }.bind(this), 500);
+      }
+
+    });
+
+
+    var Child = React.createClass({
+
+      // Reset by telling the parent component to update the model
+      reset: function () {
+        this.props.reset();
+      },
+
+      render: function () {
+        return (
+          <p>
+            Description: I'm {this.props.user.height}cm tall, and growing!. (<a onClick={this.reset}>Reset</a>)
+          </p>  
+        );
+      }
+
+    });
+
+    var Parent = React.createClass({
+    
+      mixins: [ ControllerView ],
+
+      getModels: function () {
+        return {
+          user: new User()
+        };
+      },
+
+      resetHeight: function () {
+        this.models.user.set('height', 100);
+      },
+
+      render: function() {
+        return (
+          <div>
+            <h1>About {this.state.user.name}</h1>
+
+            <p>Name: {this.state.user.name}</p>
+
+            <Child 
+              user={this.state.user} 
+              reset={this.resetHeight}
+            />
+
+          </div>
+        );
+      }
+    
+    });
+    
+    ReactDOM.render(<Parent/>, document.getElementById('content'));
+
+  </script>
+
+</body>
+</html>

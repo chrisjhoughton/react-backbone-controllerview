@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <link rel="stylesheet" type="text/css" href="./css/base.css">
+
+  <!-- Script with the compiled controllerview as a global variable for simple testing -->
+  <script type="text/javascript" src="./js/app.built.js"></script>
+
+  <!-- Libs to make the examples work -->
+  <script type="text/javascript" src="./js/react.js"></script>
+  <script type="text/javascript" src="./js/react-dom.js"></script>
+  <script type="text/javascript" src="./js/browser.min.js"></script>
+  <script type="text/javascript" src="./js/lodash.js"></script>
+  <script type="text/javascript" src="./js/backbone.js"></script>
+
+
+</head>
+<body>
+
+  <div id="content"></div>
+
+
+  <script type="text/babel">
+
+    var User = Backbone.Model.extend({
+
+      defaults: function () {
+        return {
+          name: 'Chris'
+        };
+      },
+
+      // Toggle the name every second to demonstrate binding
+      initialize: function () {
+        setInterval(function () {
+          var newName = this.get('name') === 'Chris' ? 'Steve' : 'Chris';
+          this.set('name', newName);
+        }.bind(this), 1000);
+      }
+
+    });
+
+
+    var BasicComponent = React.createClass({
+    
+      mixins: [ ControllerView ],
+
+      getModels: function () {
+        return {
+          user: new User()
+        };
+      },
+
+      render: function() {
+        return (
+          <div>
+            Hey there! My name is {this.state.user.name}.
+          </div>
+        );
+      }
+    
+    });
+    
+    ReactDOM.render(<BasicComponent/>, document.getElementById('content'));
+
+  </script>
+
+</body>
+</html>

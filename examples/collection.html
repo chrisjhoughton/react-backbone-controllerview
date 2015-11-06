@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <link rel="stylesheet" type="text/css" href="./css/base.css">
+
+  <!-- Script with the compiled controllerview as a global variable for simple testing -->
+  <script type="text/javascript" src="./js/app.built.js"></script>
+
+  <!-- Libs to make the examples work -->
+  <script type="text/javascript" src="./js/react.js"></script>
+  <script type="text/javascript" src="./js/react-dom.js"></script>
+  <script type="text/javascript" src="./js/browser.min.js"></script>
+  <script type="text/javascript" src="./js/lodash.js"></script>
+  <script type="text/javascript" src="./js/backbone.js"></script>
+
+
+</head>
+<body>
+
+  <div id="content"></div>
+
+
+  <script type="text/babel">
+
+    var Skittles = Backbone.Collection.extend({
+
+      // Toggle the name every second to demonstrate binding
+      initialize: function () {
+        setInterval(this.addOneAtRandom.bind(this), 500);
+      },
+
+      addOneAtRandom: function () {
+        var possibleColors = ['purple', 'yellow', 'green', 'orange', 'red', 'blue'];
+
+        var randIndex = Math.floor(Math.random()*possibleColors.length);
+
+        this.add({
+          id: Math.floor(Math.random()*100000),
+          color: possibleColors[randIndex]
+        });
+      }
+
+    });
+
+    
+    var Skittle = React.createClass({
+    
+      render: function() {
+        return (
+          <li>
+            {this.props.index === 0 ? 'I\'ve got' : 'And'} a {this.props.color} one (ID: {this.props.id})
+          </li> 
+        );
+      }
+    
+    });
+    
+
+    var ListComponent = React.createClass({
+    
+      mixins: [ ControllerView ],
+
+      getCollections: function () {
+        return {
+          skittles: new Skittles()
+        };
+      },
+
+      reset: function () {
+        this.collections.skittles.reset();
+      },
+
+      render: function() {
+
+        var skittles = this.state.skittles.map(function (skittle, index) {
+          return <Skittle key={skittle.id} index={index} {...skittle} />
+        });
+
+        return (
+          <div>
+            <h1>My skittles <a style={{ fontSize: 12 }} onClick={this.reset}>Reset</a></h1>
+            {skittles}
+          </div>
+        );
+      }
+    
+    });
+    
+    ReactDOM.render(<ListComponent/>, document.getElementById('content'));
+
+  </script>
+
+</body>
+</html>
