@@ -113,10 +113,11 @@ And to answer _this_ question, read [this part of "Thinking in React"](https://f
 
 Before using this mixin, there's a few things to remember:
 
-* Models & collections should be declared in the `getModels` and `getCollections` functions, return key-model objects
+* Models & collections should be declared in the `getModels` and `getCollections` functions, returning key-model objects
 * Models & collections are automatically set to `state` using the key in the declaration above (happens in `componentWillMount`)
-* Models automatically get re-updated in `state` on the Backbone events: `sync`, `change`
-* Collections automatically get re-updated in `state` on the Backbone events: `sync`, `change`, `add`, `remove`
+* Models automatically get re-set to `state` on the Backbone events: `sync`, `change`
+* Collections automatically get re-set to `state` on the Backbone events: `sync`, `change`, `add`, `remove`
+* Don't declare models and collections with the same key, or with the key of another state value
 
 
 ### Basic usage
