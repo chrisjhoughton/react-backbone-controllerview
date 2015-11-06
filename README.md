@@ -174,7 +174,7 @@ module.exports = UserSkittles;
 ### Hooking into model updates to selectively update the state (and the UI)
 
 To intercept the model and collection updates, you can declare `modelDidUpdate` or `collectionDidUpdate`
-on the component. Declaring these will entirely prevent the auto-setting to state, so you'll need 
+on the component. Declaring these will __entirely prevent__ the auto-setting to state, so you'll need 
 to set the data manually:
 
 ```js
@@ -192,6 +192,8 @@ modelDidUpdate: function (modelKey) {
   }
 }
 ```
+
+__Tip:__ use sparingly
 
 ### More examples
 
