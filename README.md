@@ -78,16 +78,16 @@ When integrating Backbone with React, there's a few key challenges & questions:
 
 There's a few possible options:
 
-|                                               Option                                              |                                                                                                                               The good & the bad                                                                                                                              |
-| ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1. Passing the model directly as a `prop`, and using a parent "controller" around each component. | Sounds simple, it isn't. The component won't automatically hook into model updates and update the views, so you'll need `forceUpdate` (bad). Also, if the model is passed to child components, anyone in the hierarchy can update the data, whic breaks uni-directional flow. |
-| 2. Declaring the model directly as a property of the component.                                   | This is cleaner, you'll usually declare the model within `componentWillMount`. There's still all the same issues as above though.                                                                                                                                             |
-| 3. Set the model's full data to state before mount, and __never__ pass the model to children.     | Cleaner as well. Also, by setting all data to state, React will automatically update components. The component that "owns" the model can make the updates, if the children need to, then can do so by passing functions as `props`. (Fits with React uni-directional flow)    |
+|                                               Option                                              |                                                                                                                               The good & the bad                                                                                                                               |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1. Passing the model directly as a `prop`, and using a parent "controller" around each component. | Sounds simple, it isn't. The component won't automatically hook into model updates and update the views, so you'll need `forceUpdate` (bad). Also, if the model is passed to child components, anyone in the hierarchy can update the data, which breaks uni-directional flow. |
+| 2. Declaring the model directly as a property of the component.                                   | This is cleaner, you'll usually declare the model within `componentWillMount`. Even if you don't pass the data directly to children, there's still the issue of running `forceUpdate`.                                                                                         |
+| 3. Set the model's full data to state before mount, and __never__ pass the model to children.     | Cleaner still. Also, by setting all data to state, React will automatically update components. The component that "owns" the model can make the updates, if the children need to, then can do so by passing functions as `props`. (Fits with React uni-directional flow)       |
 
 This mixin goes for the __third option__:
 
-* Models & collections are declared internally within the component
-* All data from models and collections are set to `state`
+* Models & collections are declared internally within the component before mount
+* All data from models and collections is set to `state`
 * Updates/syncs automatically cause the `state` to update (but they don't _have_ to)
 
 The term "controller-view" was inspired by [Flux](https://facebook.github.io/flux/docs/overview.html), where one React component
