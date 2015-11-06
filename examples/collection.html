@@ -21,12 +21,13 @@
 
   <div id="content"></div>
 
+  <small>Tip: you'll probably want to check out the source.</small>
+
 
   <script type="text/babel">
 
     var Skittles = Backbone.Collection.extend({
 
-      // Toggle the name every second to demonstrate binding
       initialize: function () {
         setInterval(this.addOneAtRandom.bind(this), 500);
       },
@@ -80,7 +81,7 @@
 
         return (
           <div>
-            <h1>My skittles <a style={{ fontSize: 12 }} onClick={this.reset}>Reset</a></h1>
+            <h1>Handling collection changes <a style={{ fontSize: 12 }} onClick={this.reset}>Reset</a></h1>
             {skittles}
           </div>
         );

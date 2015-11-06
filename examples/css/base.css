@@ -10,6 +10,7 @@ body {
 a {
   color: #4183c4;
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:hover {
@@ -59,4 +60,10 @@ p, ul {
 
 ul {
   padding-left: 30px;
+}
+
+small {
+  color: #777;
+  margin-top: 50px;
+  display: block;
 }
