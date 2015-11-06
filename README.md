@@ -9,15 +9,14 @@ This "controller view" aims to do four things:
 * Let you write less code
 * Allow for view control
 
-Table of contents:
+Contents:
 
-* [Installation & quick-start](#)
-* [Inspiration](#)
-* [Usage](#)
-* [Examples](#)
-* [Changelog](#)
-* [Contributing](#)
-* [License](#)
+* [Installation & quick-start](#installation--quick-start)
+* [Inspiration](#inspiration)
+* [Usage](#usage)
+* [Changelog](#changelog)
+* [Contributing](#contributing)
+* [License](#license)
 
 
 ## Installation & quick start
@@ -189,11 +188,21 @@ modelDidUpdate: function (modelKey) {
 }
 ```
 
-
-
-## More examples
+### More examples
 
 Check out the [examples](./examples) folder. (Clone this repo and run locally)
+
+
+## Changelog
+
+* __1.0.0__ initial release
+
+
+## Contributing
+
+Got an idea for making this mixin better? Found a bug? 
+
+Submit an [issue](./issues). Pull requests are welcome.
 
 
 ## License
