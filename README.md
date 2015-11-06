@@ -149,7 +149,7 @@ var UserSkittles = React.createClass({
 
     return (
       <div>
-        {this.state.user.name}'s skittles:
+        {this.state.user.name+"'s"} skittles:
 
         <ul>
           {skittles}
