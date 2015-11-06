@@ -72,7 +72,7 @@ var isFunction = require('mout/lang/isFunction');
 
 module.exports = function (collectionKey) {
   if (isFunction(this.collectionDidUpdate)) {
-    this.collectionDidUpdate.call(this, modelKey);
+    this.collectionDidUpdate.call(this, collectionKey);
   } else {
     var newState = {};
     newState[collectionKey] = this.collections[collectionKey].toJSON();
