@@ -79,11 +79,10 @@ When integrating Backbone with React, there's a few key challenges & questions:
 
 There's a few possible options, such as:
 
-|                                            Option                                            | Advantages |                                                      Disadvantages                                                       |
-| -------------------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Passing the model directly as a `prop`, and using a parent controller around each component. |            | * The component won't automatically hook into model updates and update the views.                                        |
-|                                                                                              |            | * If the model is passed to child components, anyone in the hierarchy can update the data. (Breaks uni-directional flow) |
-|                                                                                              |            |                                                                                                                          |
+|                                            Option                                            |                                                                                                The good & the bad                                                                                                 |
+| -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Passing the model directly as a `prop`, and using a parent controller around each component. | The component won't automatically hook into model updates and update the views. Also, if the model is passed to child components, anyone in the hierarchy can update the data. (Breaks uni-directional flow) |
+|                                                                                              |                                                                                                                                                                                                              |
 
 1. Passing the model directly as a `prop`, and using a parent controller around each component
 2. Declaring the model/collection as a property of a component
