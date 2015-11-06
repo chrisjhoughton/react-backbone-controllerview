@@ -11,7 +11,7 @@ A simple mixin to bind Backbone models and collections to React components. Aims
 
 * [Installation & quick-start](#installation--quick-start)
 * [Inspiration](#inspiration)
-* [Usage](#usage)
+* [Usage](#api--usage)
 * [Changelog](#changelog)
 * [Contributing](#contributing)
 * [License](#license)
@@ -193,7 +193,7 @@ Check out the [examples](./examples) folder. (Clone this repo and run locally)
 
 ## Changelog
 
-* __1.0.0__ initial release
+* __1.0.0__ initial release w/ unit tests
 
 
 ## Contributing
