@@ -106,7 +106,17 @@ It's actually better to ask the question:
 And to answer _this_ question, read [this part of "Thinking in React"](https://facebook.github.io/react/docs/thinking-in-react.html#step-4-identify-where-your-state-should-live).
 
 
-## Usage 
+## API & usage
+
+Before using this mixin, there's a few things to remember:
+
+* Models & collections should be declared in the `getModels` and `getCollections` functions, return key-model objects
+* Models & collections are automatically set to `state` using the key in the declaration above (happens in `componentWillMount`)
+* Models automatically get re-updated in `state` on the Backbone events: `sync`, `change`
+* Collections automatically get re-updated in `state` on the Backbone events: `sync`, `change`, `add`, `remove`
+
+
+### Basic usage
 
 You'll need to declare `ControllerView` as a mixin in the React component you'd like to act as a 
 controller-view, and then declare your Backbone models and collections using `getModels` and `getCollections`.
@@ -123,12 +133,6 @@ var skittles       = require('collections/skittles'); // instance, not class
 var UserSkittles = React.createClass({  
 
   mixins: [ ControllerView ],
-
-  getInitialState: function () {
-    return {
-      isLoading: true
-    };
-  },
 
   getModels: function () {
     return {
@@ -163,6 +167,35 @@ var UserSkittles = React.createClass({
 module.exports = UserSkittles;
 ```
 
+### Hooking into model updates to selectively update the state (and the UI)
+
+To intercept the model and collection updates, you can declare `modelDidUpdate` or `collectionDidUpdate`
+on the component. Declaring these will entirely prevent the auto-setting to state, so you'll need 
+to set the data manually:
+
+```js
+modelDidUpdate: function (modelKey) {
+  // don't set user data to state for now
+  if (modelKey === 'user') {
+    return;
+  }
+
+  // but do set everything else!
+  else {
+    var newState = {};
+    newState[modelKey] = this.models[modelKey].toJSON();
+    this.setState(newState);
+  }
+}
+```
+
+
+
+## More examples
+
+Check out the [examples](./examples) folder. (Clone this repo and run locally)
 
 
 ## License
+
+Licensed under MIT.
