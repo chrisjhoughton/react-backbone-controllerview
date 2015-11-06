@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <link rel="stylesheet" type="text/css" href="./css/base.css">
+
+  <!-- Script with the compiled controllerview as a global variable for simple testing -->
+  <script type="text/javascript" src="./js/app.built.js"></script>
+
+  <!-- Libs to make the examples work -->
+  <script type="text/javascript" src="./js/react.js"></script>
+  <script type="text/javascript" src="./js/react-dom.js"></script>
+  <script type="text/javascript" src="./js/browser.min.js"></script>
+  <script type="text/javascript" src="./js/jquery.min.js"></script>
+  <script type="text/javascript" src="./js/lodash.js"></script>
+  <script type="text/javascript" src="./js/backbone.js"></script>
+
+
+</head>
+<body>
+
+  <div id="content"></div>
+
+  <small>Tip: make sure you're running a localhost instance - ajax requests won't work on file requests.</small>
+
+  <script type="text/babel">
+
+    var User = Backbone.Model.extend({
+
+      // you'll usually be using urlRoot instead of this hack
+      url: function () {
+        return 'data/user_'+this.get('id')+'.json';
+      }
+
+    });
+
+
+    var AjaxComponent = React.createClass({
+    
+      mixins: [ ControllerView ],
+
+      getInitialState: function() {
+        return {
+          isLoading: true
+        };
+      },
+
+      getModels: function () {
+        return {
+          user: new User({ id: 1 })
+        };
+      },
+
+      componentDidMount: function() {
+        this.models.user.fetch().done(function () {
+          this.setState({ isLoading: false });
+        }.bind(this));
+      },
+
+      render: function() {
+        var content;
+
+        if (this.state.isLoading) {
+          content = <p>Loading...</p>
+        }
+
+        else {
+          content = <p>Hey there! My name is {this.state.user.name}, I'm {this.state.user.age}. I was fetched by ajax and automatically set to state.</p>
+        }
+
+        return (
+          <div>
+            <h1>Using ajax</h1>
+            {content}
+          </div>
+        );
+      }
+    
+    });
+    
+    ReactDOM.render(<AjaxComponent/>, document.getElementById('content'));
+
+  </script>
+
+</body>
+</html>

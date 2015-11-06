@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <link rel="stylesheet" type="text/css" href="./css/base.css">
+
+  <!-- Script with the compiled controllerview as a global variable for simple testing -->
+  <script type="text/javascript" src="./js/app.built.js"></script>
+
+  <!-- Libs to make the examples work -->
+  <script type="text/javascript" src="./js/react.js"></script>
+  <script type="text/javascript" src="./js/react-dom.js"></script>
+  <script type="text/javascript" src="./js/browser.min.js"></script>
+  <script type="text/javascript" src="./js/lodash.js"></script>
+  <script type="text/javascript" src="./js/backbone.js"></script>
+
+
+</head>
+<body>
+
+  <div id="content"></div>
+
+  <small>Tip: you'll probably want to check out the source, and the console.</small>
+
+
+  <script type="text/babel">
+
+    var User = Backbone.Model.extend({
+
+      defaults: function () {
+        return {
+          name: 'Chris'
+        };
+      },
+
+      // Toggle the name every second to demonstrate binding
+      initialize: function () {
+        setInterval(function () {
+          var newName = this.get('name') === 'Chris' ? 'Steve' : 'Chris';
+          this.set('name', newName);
+        }.bind(this), 1000);
+      }
+
+    });
+
+    var Skittles = Backbone.Collection.extend({
+
+      initialize: function () {
+        setInterval(this.addOneAtRandom.bind(this), 500);
+      },
+
+      addOneAtRandom: function () {
+        var possibleColors = ['purple', 'yellow', 'green', 'orange', 'red', 'blue'];
+
+        var randIndex = Math.floor(Math.random()*possibleColors.length);
+
+        this.add({
+          id: Math.floor(Math.random()*100000),
+          color: possibleColors[randIndex]
+        });
+      }
+
+    });
+
+
+    var BasicComponent = React.createClass({
+    
+      mixins: [ ControllerView ],
+
+      getInitialState: function() {
+        return {
+          startTime: Date.now()
+        };
+      },
+
+      getModels: function () {
+        return {
+          user: new User()
+        };
+      },
+
+      getCollections: function () {
+        return {
+          skittles: new Skittles()
+        };
+      },
+
+      modelDidUpdate: function(modelKey) {
+        var hasTimerElapsed = (Date.now() - this.state.startTime) > 5000;
+
+        if (hasTimerElapsed) {
+          console.log('not gonna update the state, timer elapsed');
+        }
+
+        // Need to manually take the data from the model and stick it 
+        // in the state.
+        else {
+          var newState = {};
+          newState[modelKey] = this.models[modelKey].toJSON();
+          this.setState(newState);
+        }
+
+      },
+
+      // Same syntax applies with `collectionDidUpdate`.
+      collectionDidUpdate: function (collectionKey) {
+
+        // Only update on evens
+        if (this.collections.skittles.length % 2 !== 0) {
+          console.log('not even, don\'t update state');
+          return;
+        }
+
+        var newState = {};
+        newState[collectionKey] = this.collections[collectionKey].toJSON();
+        this.setState(newState);
+      },
+
+      render: function() {
+        var skittles = this.state.skittles.map(function (skittle) {
+          return (
+            <li key={skittle.id}>
+              {skittle.color}
+            </li>
+          );
+        });
+
+        return (
+          <div>
+            <h1>Optionally listening to model/collection changes</h1>
+            <p>Hey there! My name is {this.state.user.name}.</p>
+            <p>Here's a my skittles (updated every 2 added)</p>
+            {skittles}
+          </div>
+        );
+      }
+    
+    });
+    
+    ReactDOM.render(<BasicComponent/>, document.getElementById('content'));
+
+  </script>
+
+</body>
+</html>
