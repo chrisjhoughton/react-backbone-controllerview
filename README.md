@@ -39,7 +39,6 @@ var MyComponent = React.createClass({
 
   // Declare any models in the view - any models will get set to state
   // by calling `toJSON()` internally.
-  // (This is run before mount)
   getModels: function () {
     return {
       user: new Backbone.Model({ name: 'Chris Houghton '})
