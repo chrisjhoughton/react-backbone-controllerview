@@ -83,7 +83,7 @@ There's a few possible options:
 | 2. Declaring the model directly as a property of the component.                                 | This is cleaner, you'll usually declare the model within `componentWillMount`. There's still all the same issues as above though.                                                                                                                                             |
 | 3. Set the model's full data to state, and __never__ pass the model to children.                | Cleaner as well. Also, by setting all data to state, React will automatically update components. The component that "owns" the model can make the updates, if the children need to, then can do so by passing functions as `props`. (Fits with React uni-directional flow)    |
 
-This mixin goes for the third option:
+This mixin goes for the __third option__:
 
 * Models & collections are declared internally within the component
 * All data from models and collections are set to `state`
