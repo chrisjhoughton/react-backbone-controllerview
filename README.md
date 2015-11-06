@@ -80,6 +80,7 @@ When integrating Backbone with React, there's a few key challenges & questions:
 2. Is it possible to avoid writing `on('change')` and `on('sync')` all over the place?
 3. Just which component "owns" the data?
 
+
 There's a few possible options:
 
 |                                               Option                                              |                                                                                                                               The good & the bad                                                                                                                               |
