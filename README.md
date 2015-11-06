@@ -71,7 +71,7 @@ While there are a number of other Backbone-related React components out there, n
 a simple & declarative approach. When looking ourselves, we found that a lot of the components out there 
 seemed to be _fighting_ "the React way", rather than going along with it.
 
-React's concept of uni-directional data flow is fantastic. It adds simplicity to applications, 
+React's concept of uni-directional data flow is crackin'. It adds simplicity to applications, 
 making components simple to understand and debug.
 
 When integrating Backbone with React, there's a few key challenges & questions:
