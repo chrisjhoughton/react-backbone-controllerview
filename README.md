@@ -14,6 +14,7 @@ Table of contents:
 * [Installation & quick-start](#)
 * [Inspiration](#)
 * [Usage](#)
+* [Examples](#)
 * [Changelog](#)
 * [Contributing](#)
 * [License](#)
@@ -79,37 +80,86 @@ When integrating Backbone with React, there's a few key challenges & questions:
 
 There's a few possible options, such as:
 
-|                                            Option                                            |                                                                                                The good & the bad                                                                                                 |
-| -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Passing the model directly as a `prop`, and using a parent controller around each component. | The component won't automatically hook into model updates and update the views. Also, if the model is passed to child components, anyone in the hierarchy can update the data. (Breaks uni-directional flow) |
-|                                                                                              |                                                                                                                                                                                                              |
+|                                              Option                                             |                                                                                                                               The good & the bad                                                                                                                              |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1. Passing the model directly as a `prop`, and using a parent controller around each component. | Sounds simple, it isn't. The component won't automatically hook into model updates and update the views, so you'll need `forceUpdate` (bad). Also, if the model is passed to child components, anyone in the hierarchy can update the data, whic breaks uni-directional flow. |
+| 2. Declaring the model directly as a property of the component.                                 | This is cleaner, you'll usually declare the model within `componentWillMount`. There's still all the same issues as above though.                                                                                                                                             |
+| 3. Set the model's full data to state, and __never__ pass the model to children.                | Cleaner as well. Also, by setting all data to state, React will automatically update components. The component that "owns" the model can make the updates, if the children need to, then can do so by passing functions as `props`. (Fits with React uni-directional flow)    |
 
-1. Passing the model directly as a `prop`, and using a parent controller around each component
-2. Declaring the model/collection as a property of a component
-3. Setting the model/collection data to state
+This mixin goes for the third option:
 
+* Models & collections are declared internally within the component
+* All data from models and collections are set to `state`
+* Updates/syncs automatically cause the `state` to update (but they don't _have_ to)
 
+The term "controller-view" was inspired by [Flux](https://facebook.github.io/flux/docs/overview.html), where one React component
+controls the data flow, and acts as the glue between the data models and the UI.
 
+To answer the question:
 
-### 1. Pass the model directly as a `prop`
+> "Where should the controller view live in the hierarchy?" 
 
-```js
-var user = new Backbone.Model({ name: 'Chris Houghton' });
-React.render(<MyComponent user={user} />);
-```
+It's actually better to ask the question:
 
-In this case, the "parent" of the controller _owns_ the data. Internally within the component,
-the model will be referenced directly in the `render` function, and `forceUpdate` will be 
-run on hooks.
+> "Where should the __state__ live in the hierarchy?"
 
-This method sucks, because:
-
-* `forceUpdate` is discouraged in the [React docs](https://facebook.github.io/react/docs/component-api.html#forceupdate)
-* If you pass the model to children, it means that any component in the hierarchy can edit the model. This breaks the concept of uni-directional data flow, and is a great recipe for spaghetti :)
-* You have to bind and unbind listeners to the model 
+And to answer _this_ question, read [this part of "Thinking in React"](https://facebook.github.io/react/docs/thinking-in-react.html#step-4-identify-where-your-state-should-live).
 
 
 ## Usage 
+
+You'll need to declare `ControllerView` as a mixin in the React component you'd like to act as a 
+controller-view, and then declare your Backbone models and collections using `getModels` and `getCollections`.
+
+For example, you might have a page where you can see a list of [skittles](https://www.google.co.uk/search?q=skittles&es_sm=119&source=lnms&tbm=isch&sa=X&ved=0CAcQ_AUoAWoVChMI-PDx0_T7yAIVhG4UCh1iawus&biw=1280&bih=701) that a user owns:
+
+```js
+var $        = require('jquery');
+var React    = require('react');
+var user     = require('models/user'); // instance, not class
+var skittles = require('collections/skittles'); // instance, not class
+
+var UserSkittles = React.createClass({  
+
+  getInitialState: function () {
+    return {
+      isLoading: true
+    };
+  },
+
+  getModels: function () {
+    return {
+      user: user({ id: this.props.id });
+    };
+  },
+
+  getCollections: function () {
+    return {
+      skittles: skittles([], { user_id: this.props.id });
+    };
+  },
+
+  render: function () {
+    var skittles = this.state.skittles.map(function (skittle) {
+      return <li key={skittle.id}>{skittle.color}</li>
+    });
+
+    return (
+      <div>
+        {this.state.user.name}'s skittles:
+
+        <ul>
+          {skittles}
+        </ul>
+      </div>
+    );
+  }
+
+});
+
+module.exports = UserSkittles;
+```
+
 
 
 ## License
