@@ -140,13 +140,13 @@ var UserSkittles = React.createClass({
 
   getModels: function () {
     return {
-      user: user({ id: this.props.id });
+      user: user
     };
   },
 
   getCollections: function () {
     return {
-      skittles: skittles([], { user_id: this.props.id });
+      skittles: skittles
     };
   },
 
