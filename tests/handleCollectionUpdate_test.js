@@ -4,7 +4,7 @@ var Backbone               = require('backbone');
 var handleCollectionUpdate = require('../lib/handleCollectionUpdate');
 
 
-describe('#handleCollectionUpdate', function () {
+describe('handleCollectionUpdate', function () {
 
   it('should set the new collection to state', function () {
 
