@@ -193,9 +193,9 @@ modelDidUpdate: function (modelKey) {
 }
 ```
 
-__Tip:__ use sparingly
+__Tip:__ use sparingly.
 
-### More examples
+### Working examples
 
 Check out the [examples](./examples) folder. (Clone this repo and run locally)
 
