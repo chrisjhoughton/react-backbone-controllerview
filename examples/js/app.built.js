@@ -56,7 +56,7 @@ var ControllerView = {
   */
   componentWillUnmount: function() {
     stopListeningForChanges.call(this);
-  },
+  }
 
 };
 
@@ -145,7 +145,7 @@ module.exports = function () {
   if (isFunction(this.getModels)) {
     this.models = this.getModels.call(this);
   }
-  if (_.isFunction(this.getCollections)) {
+  if (isFunction(this.getCollections)) {
     this.collections = this.getCollections.call(this);
   }
 };
@@ -172,7 +172,7 @@ module.exports = function () {
     }.bind(this));
   }
 
-  if (this.collections) {
+  if (isObject(this.collections)) {
     forEach(this.collections, function (collection, key) {
       var update = {};
       update[key] = collection.toJSON();
@@ -206,7 +206,7 @@ module.exports = function () {
       collection.off("change add remove sync", null, self);
     });
   }
-}
+};
 
 },{"mout/collection/forEach":11,"mout/lang/isObject":15}],9:[function(require,module,exports){
 

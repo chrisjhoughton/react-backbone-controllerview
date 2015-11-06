@@ -21,11 +21,15 @@
   },
   "homepage": "https://github.com/chrisjhoughton/react-backbone-controllerview#readme",
   "devDependencies": {
+    "backbone": "^1.2.3",
     "grunt": "^0.4.5",
     "grunt-browserify": "^4.0.1",
+    "grunt-contrib-jshint": "^0.11.3",
     "grunt-mocha-test": "^0.12.7",
+    "lodash": "^3.10.1",
     "mocha": "^2.3.3",
-    "mocha-unfunk-reporter": "^0.4.0"
+    "mocha-unfunk-reporter": "^0.4.0",
+    "proxyquire": "^1.7.3"
   },
   "dependencies": {
     "mout": "^0.11.1"
