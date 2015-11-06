@@ -68,7 +68,7 @@ in the desired UI updates.
 ## Inspiration 
 
 React's concept of uni-directional data flow is fantastic. It adds simplicity to applications, 
-making it simple to understand and debug.
+making components simple to understand and debug.
 
 When integrating Backbone with React, there's a few key challenges & questions:
 
@@ -78,11 +78,11 @@ When integrating Backbone with React, there's a few key challenges & questions:
 
 There's a few possible options:
 
-|                                              Option                                             |                                                                                                                               The good & the bad                                                                                                                              |
-| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1. Passing the model directly as a `prop`, and using a parent controller around each component. | Sounds simple, it isn't. The component won't automatically hook into model updates and update the views, so you'll need `forceUpdate` (bad). Also, if the model is passed to child components, anyone in the hierarchy can update the data, whic breaks uni-directional flow. |
-| 2. Declaring the model directly as a property of the component.                                 | This is cleaner, you'll usually declare the model within `componentWillMount`. There's still all the same issues as above though.                                                                                                                                             |
-| 3. Set the model's full data to state, and __never__ pass the model to children.                | Cleaner as well. Also, by setting all data to state, React will automatically update components. The component that "owns" the model can make the updates, if the children need to, then can do so by passing functions as `props`. (Fits with React uni-directional flow)    |
+|                                               Option                                              |                                                                                                                                                                   The good & the bad                                                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1. Passing the model directly as a `prop`, and using a parent "controller" around each component. | Sounds simple, it isn't. The component won't automatically hook into model updates and update the views, so you'll need `[forceUpdate](https://facebook.github.io/react/docs/component-api.html#forceupdate)` (bad). Also, if the model is passed to child components, anyone in the hierarchy can update the data, whic breaks uni-directional flow. |
+| 2. Declaring the model directly as a property of the component.                                   | This is cleaner, you'll usually declare the model within `componentWillMount`. There's still all the same issues as above though.                                                                                                                                                                                                                     |
+| 3. Set the model's full data to state before mount, and __never__ pass the model to children.     | Cleaner as well. Also, by setting all data to state, React will automatically update components. The component that "owns" the model can make the updates, if the children need to, then can do so by passing functions as `props`. (Fits with React uni-directional flow)                                                                            |
 
 This mixin goes for the __third option__:
 
