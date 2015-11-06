@@ -114,12 +114,15 @@ controller-view, and then declare your Backbone models and collections using `ge
 For example, you might have a page where you can see a list of [skittles](https://www.google.co.uk/search?q=skittles&es_sm=119&source=lnms&tbm=isch&sa=X&ved=0CAcQ_AUoAWoVChMI-PDx0_T7yAIVhG4UCh1iawus&biw=1280&bih=701) that a user owns:
 
 ```js
-var $        = require('jquery');
-var React    = require('react');
-var user     = require('models/user'); // instance, not class
-var skittles = require('collections/skittles'); // instance, not class
+var $              = require('jquery');
+var React          = require('react');
+var ControllerView = require('rb-controllerview');
+var user           = require('models/user'); // instance, not class
+var skittles       = require('collections/skittles'); // instance, not class
 
 var UserSkittles = React.createClass({  
+
+  mixins: [ ControllerView ],
 
   getInitialState: function () {
     return {
