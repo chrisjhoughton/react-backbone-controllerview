@@ -5,7 +5,7 @@ A simple mixin to bind Backbone models and collections to React components. Aims
 * Embrace uni-directional data flow
 * Provide a simple declarative approach
 * Let you write less code
-* Allow for view control
+* Allow for full view control
 
 ### Contents:
 
