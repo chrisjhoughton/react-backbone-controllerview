@@ -7,7 +7,7 @@ Aims to do four things:
 * Embrace React's uni-directional data flow
 * Provide a simple declarative approach
 * Let you write less code
-* Allow for full view control
+* Allow for full view control on model/collection changes
 
 ### Contents:
 
